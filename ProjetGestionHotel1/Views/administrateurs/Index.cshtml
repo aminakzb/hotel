@@ -1,0 +1,231 @@
+﻿@model IEnumerable<ProjetGestionHotel1.Models.administrateur>
+
+
+@{
+    ViewBag.Title = "Index";
+
+    ProjetGestionHotel1.Models.administrateur admin = (ProjetGestionHotel1.Models.administrateur)@Session["user"];
+
+}
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<body>
+   
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="home-tab">
+
+                                <div class="tab-content tab-content-basic">
+                                    <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-8 d-flex flex-column">
+                                                <div class="row flex-grow">
+                                                    <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
+                                                        <div class="card card-rounded">
+                                                            <div class="card-body">
+                                                                <div class="d-sm-flex justify-content-between align-items-start">
+                                                                    <div>
+                                                                        <h4 class="card-title card-title-dash">Booking Statistics</h4>
+                                                                        <h5 class="card-subtitle card-subtitle-dash">chi haja hna wla blach </h5>
+                                                                    </div>
+                                                                    <div id="performance-line-legend"></div>
+                                                                </div>
+                                                                <div class="chartjs-wrapper mt-5">
+                                                                    <canvas id="performaneLine"></canvas>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 d-flex flex-column">
+                                                <div class="row flex-grow">
+                                                    <div class="col-md-6 col-lg-12 grid-margin stretch-card">
+                                                        <div class="card bg-primary card-rounded">
+                                                            <div class="card-body pb-0">
+                                                                <h4 class="card-title card-title-dash text-white mb-4">Number of clients </h4>
+                                                                <div class="row">
+                                                                    <div class="col-sm-4">
+                                                                        <p class="status-summary-ight-white mb-1">Closed Value</p>
+                                                                        <h2 class="text-info">@Session["nbr_client"]</h2>
+                                                                    </div>
+                                                                    <div class="col-sm-8">
+                                                                        <div class="status-summary-chart-wrapper pb-4">
+                                                                            <canvas id="status-summary"></canvas>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-12 grid-margin stretch-card">
+                                                        <div class="card card-rounded">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-sm-6">
+                                                                        <div class="d-flex justify-content-between align-items-center mb-2 mb-sm-0">
+                                                                            <div class="circle-progress-width">
+                                                                                <div id="totalVisitors" class="progressbar-js-circle pr-2"></div>
+                                                                            </div>
+                                                                            <div>
+                                                                                <p class="text-small mb-2">Positive comments</p>
+                                                                                <h4 class="mb-0 fw-bold">@Session["comments_positive"] %</h4>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="d-flex justify-content-between align-items-center">
+                                                                            <div class="circle-progress-width">
+                                                                                <div id="visitperday" class="progressbar-js-circle pr-2"></div>
+                                                                            </div>
+                                                                            <div>
+                                                                                <p class="text-small mb-2">Negative comments</p>
+                                                                                <h4 class="mb-0 fw-bold">@Session["comments_negative"] %</h4>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 d-flex flex-column">
+                                                <div class="row flex-grow">
+                                                    <div class="col-12 grid-margin stretch-card">
+
+                                                    </div>
+                                                </div>
+                                               
+                                                @if (@admin.is_superadmin == true)
+                                                {
+                                                    <div class="row flex-grow">
+                                                        <div class="col-12 grid-margin stretch-card">
+                                                            <div class="card card-rounded">
+                                                                <div class="card-body">
+                                                                    <div class="d-sm-flex justify-content-between align-items-start">
+                                                                        <div>
+                                                                            <h4 class="card-title card-title-dash">List of managers </h4>
+                                                                            <p class="card-subtitle card-subtitle-dash">chi tkhrbiqa hna</p>
+                                                                        </div>
+                                                                        <div>
+                                                                            @Html.ActionLink("Add a Manager", "Create", "administrateurs", new { @class = "btn btn-primary btn-lg text-white mb-0 me-0 mdi mdi-account-plus" })
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="table-responsive  mt-1" id="myTable">
+                                                                        <table class="table select-table">
+                                                                            <thead>
+                                                                                <tr>
+
+                                                                                    <th>ID</th>
+                                                                                    <th>Profile Picture</th>
+                                                                                    <th>Full Name</th>
+                                                                                    <th>Email</th>
+                                                                                    <th>N° phone</th>
+                                                                                    <th></th>
+                                                                                </tr>
+                                                                            </thead>
+
+                                                                            <tbody>
+
+                                                                                @foreach (var item in Model)
+                                                                                {
+
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(modelItem => item.id_admin, new { htmlAttributes = new { @class = "d-flex" } })
+                                                                                        </td>
+
+
+                                                                                        <td>
+                                                                                            <center> <img src="data:image/gif;base64,@Convert.ToBase64String(item.photo_profil)" class="py-1" /></center>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(modelItem => item.nom_admin, new { htmlAttributes = new { @class = "d-flex" } })
+                                                                                            @Html.DisplayFor(modelItem => item.prenom_admin, new { htmlAttributes = new { @class = "d-flex" } })
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(modelItem => item.email_admin, new { htmlAttributes = new { @class = "d-flex" } })
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(modelItem => item.tel_admin, new { htmlAttributes = new { @class = "d-flex" } })
+                                                                                        </td>
+                                                                                        @if (item.is_superadmin == false)
+                                                                                        {
+                                                                                            <td><center>
+                                                                                                @Html.ActionLink("Edit", "Edit", new { id = item.id_admin }, new { @class = "btn btn-success btn-lg text-white mb-0 me-0 mdi mdi-pencil" }) |
+                                                                                                @Html.ActionLink("Details", "Details", new { id = item.id_admin }, new { @class = "btn btn-warning btn-lg text-white mb-0 me-0 mdi mdi-chevron-double-right" }) |
+                                                                                                @Html.ActionLink("Delete", "Delete", new { id = item.id_admin }, new { @class = "btn btn-danger btn-lg text-white mb-0 me-0 mdi mdi-delete-sweep" })
+                                                                                            </center>
+                                                                                                </td>
+                                                                                        }
+                                                                                    </tr>
+                                                                                }
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                @if (@admin.is_superadmin == false)
+                                                {
+                                                    <div class="row flex-grow">
+                                                        <div class="col-sm-12 grid-margin stretch-card">
+                                                            <div class="card card-rounded">
+                                                                <div class="card-body">
+                                                                    <div class="d-sm-flex justify-content-between align-items-start">
+                                                                        <div>
+                                                                            <h4 class="card-title card-title-dash">List of reservations </h4>
+                                                                            <p class="card-subtitle card-subtitle-dash">chi tkhrbiqa hna</p>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="table-responsive  mt-1" id="myTable">
+                                                                       @{ Html.RenderAction("Index", "reservations");
+                                                                       }
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                           
+                                            </div>
+                      
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- content-wrapper ends -->
+                                        <!-- partial:partials/_footer.html -->
+                                        <!-- partial -->
+                                    </div>
+                                    <!-- main-panel ends -->
+                                
+            
+        
+</body>
+
+
+

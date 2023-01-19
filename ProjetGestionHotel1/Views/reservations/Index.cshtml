@@ -1,0 +1,65 @@
+﻿@model IEnumerable<ProjetGestionHotel1.Models.reservation>
+
+@{
+    ViewBag.Title = "Index";
+}
+@{ 
+    Layout = null;
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Room
+        </th>
+        <th>
+            Client
+        </th>
+        <th>
+           N persons
+        </th>
+        <th>
+           Start Date
+        </th>
+        <th>
+            End Date
+        </th>
+        <th>
+          State
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.chambre.num_chambre, new { htmlAttributes = new { @class = "d-flex" } })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.client.nom_client, new { htmlAttributes = new { @class = "d-flex" } })
+            @Html.DisplayFor(modelItem => item.client.prenom_client, new { htmlAttributes = new { @class = "d-flex" } })
+
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.nbr_personne, new { htmlAttributes = new { @class = "d-flex" } })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.debut_reservation, new { htmlAttributes = new { @class = "d-flex" } })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fin_reservation, new { htmlAttributes = new { @class = "d-flex" } })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.statut, new { htmlAttributes = new { @class = "d-flex" } })
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id = item.id_reservation }, new { @class = "btn btn-warning btn-lg text-white mb-0 me-0 mdi mdi-chevron-double-right" }) |
+            
+            @Html.ActionLink("Accept", "Accept", new { id = item.id_reservation }, new { @class = "btn btn-success btn-lg text-white mb-0 me-0 mdi mdi-check" }) |
+            @Html.ActionLink("Reject", "Reject", new { id = item.id_reservation }, new { @class = "btn btn-danger btn-lg text-white mb-0 me-0 mdi mdi mdi-close" })
+        </td>
+    </tr>
+}
+
+</table>

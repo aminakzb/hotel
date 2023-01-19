@@ -1,0 +1,83 @@
+﻿@model ProjetGestionHotel1.Models.reservation
+
+@{
+    ViewBag.Title = "Details";
+}
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+
+            <div class="col-sm-8 offset-sm-2">
+                <div class="card ">
+                    <div class="card-body ">
+                        <h4 class="card-title">Manager informations</h4>
+                        <p class="card-description">
+                            Consult a manager informations
+                        </p>
+                        <div>
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    @Html.LabelFor(model => model.client.nom_client, "Client Last Name :", htmlAttributes: new { @class = "col-sm-4  " })
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.client.nom_client)
+                                </dd>
+
+                                <dt>
+                                    @Html.LabelFor(model => model.client.prenom_client, "Client First Name :", htmlAttributes: new { @class = "col-sm-4  " })
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.client.prenom_client)
+                                </dd>
+
+                                <dt>
+                                    @Html.LabelFor(model => model.nbr_personne, "Number of persons :", htmlAttributes: new { @class = "col-sm-4  " })
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.nbr_personne)
+                                </dd>
+
+                                <dt>
+                                    @Html.LabelFor(model => model.debut_reservation, "Booking Start Date :", htmlAttributes: new { @class = "col-sm-4  " })
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.debut_reservation)
+                                </dd>
+
+                                <dt>
+                                    @Html.LabelFor(model => model.fin_reservation, "Booking End Date :", htmlAttributes: new { @class = "col-sm-4  " })
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.fin_reservation)
+                                </dd>
+
+                                <dt>
+                                    @Html.LabelFor(model => model.statut, "State :", htmlAttributes: new { @class = "col-sm-4  " })
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.statut)
+                                </dd>
+
+                            </dl>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p style="margin-left:200px; margin-top:20px;">
+            <a class = "btn btn-primary me-2 text-white mdi mdi-arrow-left-bold" href="@Url.Action("Index","administrateurs")">Back</a>
+           
+        </p>
+    </div>
+</div>
